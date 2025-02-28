@@ -1,19 +1,19 @@
-import { config } from "dotenv";
+import { config } from 'dotenv';
 config();
 
 const s3Endpoint = process.env.APU_TIMETABLE_S3;
 const intakeCode = process.env.INTAKE_CODE;
-const nonElectives = []; // Add MODID that is NOT your elective
-const grouping = "G1"; // G1 is default, grouping to filter by
+const nonElectives = ['CT024-3-3-DCOMS', 'CT027-3-3-EPDA-L']; // Add MODID that is NOT your elective
+const grouping = 'G1'; // G1 is default, grouping to filter by
 
 export async function fetchTimetable() {
   if (!s3Endpoint) {
-    console.error("❌ Error: S3 endpoint not configured");
+    console.error('❌ Error: S3 endpoint not configured');
     return []; // Return empty array instead of Response
   }
 
   if (!intakeCode) {
-    console.error("❌ Error: Intake Code not configured");
+    console.error('❌ Error: Intake Code not configured');
     return [];
   }
 
@@ -21,7 +21,7 @@ export async function fetchTimetable() {
     const response = await fetch(s3Endpoint);
 
     if (!response.ok) {
-      console.error("❌ Error: Unable to fetch data from S3");
+      console.error('❌ Error: Unable to fetch data from S3');
       return [];
     }
 
@@ -37,7 +37,7 @@ export async function fetchTimetable() {
 
     return result; // ✅ Return data directly as an array
   } catch (error) {
-    console.error("❌ Error fetching data:", error.message);
+    console.error('❌ Error fetching data:', error.message);
     return []; // ✅ Return empty array on error
   }
 }
